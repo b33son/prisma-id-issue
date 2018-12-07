@@ -1,0 +1,34 @@
+mutation {
+  createUser(
+    data: {
+      email: "d@example.com"
+      password: "$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm" # plaintext password: "nooneknows"
+      name: "Sarah"
+      posts: {
+        create: [
+          {
+            name: "Hello World"
+            caption: "This is my first blog post ever!"
+            location: {
+              create: {
+                name: "23 moss ln"
+                lat: "34.21"
+                long: "124.212"
+                city: "Oakland"
+                region: "CA"
+                country: "USA"
+              }
+            }
+          }
+          {
+            name: "My Second Post"
+            caption: "My first post was good, but this one is better!"
+          }
+          { name: "Solving World Hunger", caption: "This is a draft..." }
+        ]
+      }
+    }
+  ) {
+    id
+  }
+}

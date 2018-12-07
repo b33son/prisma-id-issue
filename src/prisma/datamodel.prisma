@@ -1,0 +1,91 @@
+# projectId: cjoxtwhv8dp2t0175dmgovk0h
+# version: 40
+
+type User @model {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID! @unique
+  name: String
+  email: String @unique
+  password: String
+  phone: String
+  profileImgUrl: String
+  facebookHandle: String
+  instagramHandle: String
+  twitterHandle: String
+  snapchatHandle: String
+  locations: [Location!]! @relation(name: "UserLocation")
+  orgs: [Org!]! @relation(name: "UserOrgMember")
+  orgsAsOwner: [Org!]! @relation(name: "UserOrgOwner")
+  orgsAsAdmin: [Org!]! @relation(name: "UserOrgAdmin")
+  campaigns: [Campaign!]! @relation(name: "UserCampMember")
+  campaignsAsLead: [Campaign!]! @relation(name: "UserCampLead")
+  posts: [Post!]! @relation(name: "UserPost")
+}
+
+type Campaign @model {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID! @unique
+  name: String
+  instructions: String
+  startDateTime: DateTime
+  endDateTime: DateTime
+  campaignLeads: [User!]! @relation(name: "UserCampLead")
+  campaignMembers: [User!]! @relation(name: "UserCampMember")
+  orgs: [Org!]! @relation(name: "OrgCampaign")
+  posts: [Post!]! @relation(name: "CampaignPost")
+}
+
+type Org @model {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID! @unique
+  name: String
+  owner: User @relation(name: "UserOrgOwner")
+  orgAdmins: [User!]! @relation(name: "UserOrgAdmin")
+  orgMembers: [User!]! @relation(name: "UserOrgMember")
+  campaigns: [Campaign!]! @relation(name: "OrgCampaign")
+  posts: [Post!]! @relation(name: "OrgPost")
+}
+
+type Post @model {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID! @unique
+  name: String
+  caption: String
+  owner: User @relation(name: "UserPost")
+  campaign: Campaign @relation(name: "CampaignPost")
+  org: Org @relation(name: "OrgPost")
+  medias: [Media!]! @relation(name: "PostMedia")
+  location: Location @relation(name: "PostLocation")
+}
+
+type Media @model {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID! @unique
+  name: String
+  post: Post @relation(name: "PostMedia")
+  contentType: String!
+  url: String!
+  secret: String
+}
+
+type Location @model {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID! @unique
+  name: String
+  street: String
+  city: String
+  region: String
+  country: String
+  isoCountryCode: String
+  postalCode: String
+  long: String
+  lat: String
+  user: User @relation(name: "UserLocation")
+  post: Post @relation(name: "PostLocation")
+}

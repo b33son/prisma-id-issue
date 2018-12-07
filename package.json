@@ -1,0 +1,25 @@
+{
+  "name": "graphqlgen-template-yoga",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "nodemon -x ts-node --no-cache src/index.ts",
+    "gen": "graphqlgen"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/jsonwebtoken": "^8.3.0",
+    "bcrypt": "^3.0.2",
+    "graphql-shield": "^4.1.0",
+    "graphql-yoga": "^1.16.7",
+    "jsonwebtoken": "^8.4.0",
+    "prisma-client-lib": "^1.23.0-test.3"
+  },
+  "devDependencies": {
+    "graphqlgen": "0.4.0",
+    "nodemon": "1.18.7",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.1"
+  },
+  "license": "MIT"
+}

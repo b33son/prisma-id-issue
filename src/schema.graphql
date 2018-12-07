@@ -1,0 +1,118 @@
+scalar DateTime
+scalar UUID
+
+type Query {
+  me: User
+  getUsers: [User!]!
+  getUsersInCampaign(id: ID): [User!]!
+  getUser(id: ID!): User
+}
+
+type Mutation {
+  signup(email: String!, password: String!, name: String): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+  createOrg(name: String!): Org!
+}
+
+# type Mutation {
+
+#   createUser(name: String): User!
+#   createDraft(title: String!, content: String!, authorId: ID!): Post!
+#   deletePost(id: ID!): Post
+#   publish(id: ID!): Post
+# }
+# type Query {
+
+# }
+
+type User {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID!
+  name: String
+  email: String
+  phone: String
+  profileImgUrl: String
+  facebookHandle: String
+  instagramHandle: String
+  twitterHandle: String
+  snapchatHandle: String
+  locations: [Location!]!
+  orgs: [Org!]!
+  orgsAsOwner: [Org!]!
+  orgsAsAdmin: [Org!]!
+  campaigns: [Campaign!]!
+  campaignsAsLead: [Campaign!]!
+  posts: [Post!]!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+type Campaign {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID!
+  name: String
+  instructions: String
+  startDateTime: DateTime
+  endDateTime: DateTime
+  campaignLeads: [User!]!
+  campaignMembers: [User!]!
+  orgs: [Org!]!
+  posts: [Post!]!
+}
+
+type Org {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID!
+  name: String
+  owner: User
+  orgAdmins: [User!]!
+  orgMembers: [User!]!
+  campaigns: [Campaign!]!
+  posts: [Post!]!
+}
+
+type Post {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID!
+  name: String
+  caption: String
+  owner: User
+  campaign: Campaign
+  org: Org
+  medias: [Media!]!
+  location: Location
+}
+
+type Media {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID!
+  name: String
+  post: Post
+  contentType: String!
+  url: String!
+  secret: String
+}
+
+type Location {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: UUID!
+  name: String
+  street: String
+  city: String
+  region: String
+  country: String
+  isoCountryCode: String
+  postalCode: String
+  long: String
+  lat: String
+  user: User
+  post: Post
+}
